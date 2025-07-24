@@ -16,3 +16,4 @@ php artisan db:seed
 ```
 
 http://localhost:8000/api/products - основной url для API
+http://localhost:8000/api/products/total - сумма по товарам в наличии
