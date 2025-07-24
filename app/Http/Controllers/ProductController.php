@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductIndexRequest;
+use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index(ProductIndexRequest $request)
     {
-        $request->validate([
-            'in_stock' => 'boolean',
-            'category' => 'string|max:255',
-        ]);
-
         $products = Product::query()
             ->category($request->category)
             ->inStock($request->in_stock)
@@ -26,15 +24,8 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'category' => 'required|string|max:255',
-            'in_stock' => 'boolean'
-        ]);
-
         $product = Product::create($request->all());
 
         return new ProductResource($product);
@@ -51,15 +42,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        $request->validate([
-            'name' => 'string|max:255',
-            'price' => 'numeric|min:0',
-            'category' => 'string|max:255',
-            'in_stock' => 'boolean'
-        ]);
-
         $product->update($request->all());
 
         return $product;
