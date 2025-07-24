@@ -74,4 +74,11 @@ class ProductController extends Controller
 
         return response()->noContent();
     }
+
+    public function total()
+    {
+        return response()->json([
+            'total in stock' => Product::totalInStockValue()
+        ]);
+    }
 }

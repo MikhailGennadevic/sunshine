@@ -27,4 +27,10 @@ class Product extends Model
             fn($q) => $q->where('in_stock', filter_var($inStock, FILTER_VALIDATE_BOOLEAN))
         );
     }
+
+    public static function totalInStockValue()
+    {
+        return self::where('in_stock', true)->sum('price');
+    }
+
 }
